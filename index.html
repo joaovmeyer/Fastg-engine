@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta name="description" content="Jogue contra Fastg engine online!">
+	<meta property="og:description" content="Jogue contra Fastg engine online!"/>
+
+	<meta property="og:title" content="Fastg Chess"/>
+	<meta property="og:url" content="https://fastg-chess.netlify.app/" />
+	<meta property="og:type" content="website">
+
+	<title>Fastg Chess</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<style type="text/css">
+		.color-option {
+			background-color: rgb(151, 116, 69);
+			border: 4px solid black;
+			box-sizing: border-box;
+			aspect-ratio: 1;
+			font-size: calc(1rem + 1.5vmin);
+			text-transform: uppercase;
+
+			background-size: 70%;
+			background-position: center 10%;
+			background-repeat: no-repeat;
+
+			background-image: url("chess pieces/bN.png");
+			text-shadow: 0 0 2px white;
+		}
+		.color-option::before {
+			content: attr(data-option);
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translate(-50%);
+		}
+		.color-option[data-option="white"],
+		.color-option[data-option="brancas"] {
+			background-image: url("chess pieces/wN.png");
+			color: white;
+			text-shadow: 0 0 2px black;
+		}
+	</style>
+</head>
+<body class="no-sidenav">
+
+	<main role="main">
+	 	<h1>Fastg Engine</h1>
+
+		<p>Escolha a sua cor e o controle de tempo: </p>
+
+		<br><br>
+
+		<form action="" method="GET" class="form">
+			<p>
+				<label for="timeControl">Controle de tempo: </label>
+				<select name="timeControl" id="timeControl">
+					<option value="1|0">1|0</option>
+					<option value="3|2" selected>3|2</option>
+					<option value="5|3">5|3</option>
+					<option value="10|5">10|5</option>
+				</select>
+			</p>
+
+			<div class="form__images-container">
+				<div>
+					<input type="submit" name="color" value="white">
+					<div class="color-option" data-option="brancas"></div>
+				</div>
+				<div>
+					<input type="submit" name="color" value="black">
+					<div class="color-option" data-option="pretas"></div>
+				</div>
+			</div>
+		</form>
+	</main>
+
+	<script type="text/javascript" src="xadrez.js"></script>
+	<script type="text/javascript">
+
+		var main = document.querySelector("main");
+		var urlParams = new URLSearchParams(window.location.search);
+		var color = urlParams.get("color");
+		var initialFEN = urlParams.get("FEN") || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+		var timeControl = urlParams.get("timeControl") || "3|2";
+
+		if (color == "white" || color == "black") {
+			var game = new Game(initialFEN, color, timeControl);
+			main.innerHTML = "<h1>Fastg Engine</h1>";
+			main.append(game.container);
+		}
+
+
+	</script>
+</body>
+</html>
